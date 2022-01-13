@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="11403ad711644833837d2dbfd93cb370" Name="Diagram1">
+        <EntityTypeShape EntityType="FallenMoon.Database.BlogPost" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FallenMoon.Database.UserAccount" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FallenMoon.Database.UserEmailConfirmation" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FallenMoon.Database.UserMessage" Width="1.5" PointX="5.25" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FallenMoon.Database.UserRank" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <AssociationConnector Association="FallenMoon.Database.FK_BlogPosts_UserAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="FallenMoon.Database.FK_UserAccounts_UserRanks" ManuallyRouted="false" />
+        <AssociationConnector Association="FallenMoon.Database.FK_UserEmailConfirmations_UserAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="FallenMoon.Database.FK_UserMessages_UserAccounts" ManuallyRouted="false" />
+        <AssociationConnector Association="FallenMoon.Database.FK_UserMessages_UserAccounts1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FallenMoon.Database.UserProfile" Width="1.5" PointX="5.25" PointY="17.375" />
+        <AssociationConnector Association="FallenMoon.Database.FK_UserProfiles_UserAccounts" />
+        <EntityTypeShape EntityType="FallenMoon.Database.BlogPostCommentReport" Width="1.5" PointX="12.75" PointY="8.875" />
+        <EntityTypeShape EntityType="FallenMoon.Database.BlogPostComment" Width="1.5" PointX="10.5" PointY="8.125" />
+        <AssociationConnector Association="FallenMoon.Database.FK_BlogPostCommentReports_BlogPostComments" />
+        <AssociationConnector Association="FallenMoon.Database.FK_BlogPostCommentReports_UserAccounts" />
+        <AssociationConnector Association="FallenMoon.Database.FK_BlogPostComments_BlogPosts" />
+        <AssociationConnector Association="FallenMoon.Database.FK_BlogPostComments_UserAccounts" />
+        <EntityTypeShape EntityType="FallenMoon.Database.CommunityCategory" Width="1.5" PointX="1.5" PointY="2.5" />
+        <EntityTypeShape EntityType="FallenMoon.Database.CommunityForum" Width="1.5" PointX="1.5" PointY="13.5" />
+        <EntityTypeShape EntityType="FallenMoon.Database.CommunityPost" Width="1.5" PointX="8.25" PointY="8.5" />
+        <EntityTypeShape EntityType="FallenMoon.Database.CommunitySubCategory" Width="1.5" PointX="3.75" PointY="2.5" />
+        <EntityTypeShape EntityType="FallenMoon.Database.CommunityTopic" Width="1.5" PointX="6" PointY="2.5" />
+        <AssociationConnector Association="FallenMoon.Database.FK_CommunityCategories_CommunityForums" />
+        <AssociationConnector Association="FallenMoon.Database.FK_CommunitySubCategories_CommunityCategories" />
+        <AssociationConnector Association="FallenMoon.Database.FK_CommunityPosts_CommunityTopics" />
+        <AssociationConnector Association="FallenMoon.Database.FK_CommunityTopicPosts_UserAccounts" />
+        <AssociationConnector Association="FallenMoon.Database.FK_CommunityTopics_CommunitySubCategories" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

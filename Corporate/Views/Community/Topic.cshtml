@@ -1,0 +1,46 @@
+﻿@using FallenMoon.Models
+@using FallenMoon.Library
+@using FallenMoon.Library.Database
+@model CommunityViewModel
+@{
+    ViewBag.Title = Model.Topic.TopicTitle;
+    Layout = "_CommunityLayout.cshtml";
+
+    UserAccount user = null;
+
+    if (Session["User"] != null)
+    {
+        user = Session["User"] as UserAccount;
+    }
+}
+<div class="card">
+    <div class="card-header bg-blue text-light">
+        @Model.Topic.TopicTitle
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach (var post in Model.Posts)
+        {
+                var poster = UserManager.GetProfile(post.UserId);
+            <li class="list-group-item">
+                <h6 class="card-subtitle mb-2 text-muted">
+                    Posted by @Html.RouteLink(poster.Profile.UserName, "Profile", new { userName = poster.Profile.UserName })
+                    on @post.PostDate.ToString("MMM d, yyyy")
+                </h6>
+                <p class="card-text">@post.PostText</p>
+            </li>
+        }
+
+        @if (user != null)
+        {
+            <li class="list-group-item bg-blue new-reply text-center text-light">
+                New Reply
+            </li>
+        }
+        else
+        {
+            <li class="list-group-item text-center">
+                <em>To post a comment, please @Html.ActionLink("login", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") a new account.</em>
+            </li>
+        }
+    </ul>
+</div>

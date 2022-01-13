@@ -1,0 +1,43 @@
+﻿@using FallenMoon.Models;
+@model BlogViewModel
+@{ 
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="blog-page bg-blue">
+    <div class="container">
+        <h1 class="text-light text-center display-4">Fallen Moon Blog</h1>
+        <div class="row">
+            <div class="col-md-8">
+                @RenderBody()
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Twitter Feed <small><a href="https://twitter.com/thefallenmoon" target="_blank">@@thefallenmoon</a></small></h4>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var lastTweet = Model.Tweets.Last();
+                            foreach (var tweet in Model.Tweets)
+                            {
+                                <blockquote class="blockquote mb-0">
+                                    <p>@Html.Raw(tweet.TweetText)</p>
+                                    <footer class="blockquote-footer">
+                                        @@@tweet.TweetUser at
+                                        <a href="https://twitter.com/@tweet.TweetUser/status/@tweet.TweetId" target="_blank">@tweet.TweetDate.ToString("MMM d, yyyy")</a>
+                                    </footer>
+                                </blockquote>
+                                if (tweet != lastTweet)
+                                {
+                                    <hr />
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

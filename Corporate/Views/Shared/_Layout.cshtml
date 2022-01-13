@@ -1,0 +1,133 @@
+﻿@using FallenMoon.Library;
+@using FallenMoon.Library.Database;
+@{
+    var PageTitle = ViewBag.Brand;
+    if (ViewBag.Title != null && !string.IsNullOrEmpty(ViewBag.Title))
+    {
+        PageTitle = string.Join(" - ", ViewBag.Title, ViewBag.Brand);
+    }
+
+    UserAccount user = null;
+
+    if (Session["User"] != null)
+    {
+        user = Session["User"] as UserAccount;
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@PageTitle</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+        <div class="container">
+            <ul class="navbar-nav float-left">
+                <li class="nav-item">
+                    <a class="navbar-brand" href="/">
+                        <img src="~/Content/Images/fm-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                        Fallen Moon
+                    </a>
+                </li>
+                <li class="nav-item">@Html.ActionLink("Community", "Index", "Community", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Blog", "Index", "Blog", null, new { @class = "nav-link" })</li>
+            </ul>
+
+            <ul class="navbar-nav float-right">
+                @if (user != null)
+                {
+                    <li><span class="navbar-text">Welcome back, @UserManager.GetProfile(user.UserId).Profile.UserName!</span></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Manage
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            @if (UserManager.IsAdmin(user.UserId))
+                            {
+                                @Html.ActionLink("Admin Panel", "Admin", "Management", null, new { @class = "dropdown-item" })
+                            }
+                            @if (UserManager.IsModerator(user.UserId))
+                            {
+                                @Html.ActionLink("Moderator Panel", "Moderator", "Management", null, new { @class = "dropdown-item" })
+                            }
+                            @if (UserManager.IsBlogger(user.UserId))
+                            {
+                                @Html.ActionLink("Blogger Panel", "Blogger", "Management", null, new { @class = "dropdown-item" })
+                            }
+                            @Html.ActionLink("Manage", "Index", "Account", null, new { @class = "dropdown-item" })
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                    <li></li>
+                }
+                else
+                {
+                    <li><a href="/Account/Login" class="nav-link">Login</a></li>
+                    <li><a href="/Account/Register" class="nav-link">Register</a></li>
+                }
+            </ul>
+        </div>
+    </nav>
+    <div class="body-content">
+        @RenderBody()
+    </div>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-4">
+                    <ul class="list-unstyled">
+                        <li><h5>Projects</h5></li>
+                        <li><a href="http://shadow-craft.net" target="_blank">Shadow-Craft</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <ul class="list-unstyled">
+                        <li><h5>Social Media</h5></li>
+                        <li class="sm-icons">
+                            <a href="https://www.facebook.com/thefallenmoon" target="_blank" class="fa fa-facebook-square"></a>
+                            <a href="https://www.twitter.com/thefallenmoon" target="_blank" class="fa fa-twitter-square"></a>
+                            <a href="https://www.reddit.com/r/thefallenmoon" target="_blank" class="fa fa-reddit-square"></a>
+                            <a href="https://www.github.com/FallenMoonNetwork" target="_blank" class="fa fa-github-square"></a>
+                            <a href="https://discord.gg/CZSJEVf" target="_blank" class="fa fa-discord-square"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <ul class="list-unstyled">
+                        <li><h5>Company</h5></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Portfolio</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="#">Terms &amp; Conditions</a>
+                    -
+                    <a href="#">Privacy Policy</a>
+                </div>
+                <div class="col-md-6 text-right">
+                    &copy; @DateTime.Now.Year Fallen Moon, LLC. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/javascript")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

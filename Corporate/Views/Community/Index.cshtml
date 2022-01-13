@@ -1,0 +1,35 @@
+﻿@using FallenMoon.Models
+@model CommunityViewModel
+@{
+    ViewBag.Title = "Community Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="community-categories bg-blue">
+    <div class="container">
+        <h1 class="text-light text-center display-4">Fallen Moon Community</h1>
+        <div class="row">
+            @foreach (var forum in Model.Forums)
+            {
+                var url = "/Content/Images/Community/";
+                if (forum.ForumImage == null)
+                {
+                    url = "http://placehold.it/200x200";
+                }
+                else
+                {
+                    url += forum.ForumImage;
+                }
+
+                <a href="/Community/@forum.ForumName" class="col-md-3 text-dark text-undecorated category-column">
+                    <div class="card" style="">
+                        <img class="card-img-top" src="@url" alt="" height="256" width="256">
+                        <div class="card-body text-center">
+                            <h5 class="card-text">@forum.ForumDisplayName</h5>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</div>

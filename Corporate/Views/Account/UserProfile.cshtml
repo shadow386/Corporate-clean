@@ -1,0 +1,44 @@
+﻿@using FallenMoon.Models
+@using FallenMoon.Library
+@using FallenMoon.Library.Database
+@model ProfileViewModel
+@{
+    var profile = Model.Profile;
+}
+
+<div class="container profile-page">
+    <div class="row profile-content">
+        <div class="col-md-3 text-center">
+            <img src="http://via.placeholder.com/150x150" alt="Profile Picture" class="img-thumbnail rounded mx-auto d-block">
+        </div>
+        <div class="col-md-9 profile-color profile-color-blue text-light">
+            <p>
+                <h4 class="float-left">@profile.UserName</h4>
+                <span class="badge badge-primary bg-blue">@UserManager.GetRankFromUserId(profile.UserId).ToString()</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="profileTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-expanded="true">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="scraft-tab" data-toggle="tab" href="#scraft" role="tab" aria-controls="scraft" aria-expanded="true">Shadow-Craft</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                        <div class="tab-pane fade" id="scraft" role="tabpanel" aria-labelledby="scraft-tab">...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

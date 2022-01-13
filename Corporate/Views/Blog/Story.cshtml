@@ -1,0 +1,76 @@
+﻿@using FallenMoon.Library;
+@using FallenMoon.Models;
+@using System.Globalization;
+@model BlogViewModel
+@{
+    Layout = "_BlogLayout.cshtml";
+    var post = Model.Story;
+    var profile = post.UserAccount.UserProfile;
+}
+
+<div class="card">
+    <div class="card-header text-dark text-undecorated">
+        <h4>
+            @post.BlogTitle
+            <small class="text-muted">By @profile.UserName on @post.DatePublished.Value.ToString("D", CultureInfo.CreateSpecificCulture("en-US"))</small>
+        </h4>
+    </div>
+    <div class="card-body" style="white-space: pre-line">@Html.Raw(post.BlogBody)</div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Comments
+    </div>
+    <div class="card-body">
+        @if (post.BlogPostComments.Count() == 0)
+            {
+            <h5>No comments available</h5>
+        }
+        else
+        {
+            foreach (var comment in post.BlogPostComments)
+            {
+                var rank = UserManager.GetRankFromUserId(comment.UserId);
+                <b class="card-text">
+                    @comment.UserAccount.UserProfile.UserName
+                    @if ((int)rank < 5)
+                    {
+                        <span class="badge badge-primary bg-blue">@rank.ToString()</span>
+                    }
+                </b>
+                    <div class="card-text">@comment.CommentText</div>
+                    <p class="card-text">
+                        <small class="text-muted">Posted on @comment.CommentDate.ToString("f", CultureInfo.CreateSpecificCulture("en-US"))</small>
+                    </p>
+
+                        if (comment != post.BlogPostComments.Last())
+                        {
+                            <hr />
+                                }
+                            }
+                        }
+    </div>
+    <div class="card-footer text-muted">
+        <div class="card-reply-form hidden">
+            <h5>Post a reply</h5>
+            @using (Html.BeginForm("Comment", "Blog", new { BlogPostId = post.BlogPostId }, FormMethod.Post))
+            {
+                <textarea name="commentText" class="form-control"></textarea>
+                    <br />
+                    <input type="submit" class="btn btn-primary bg-blue" placeholder="Post a reply" />
+                    <button type="button" class="btn cancel-blog-comment">Cancel</button>
+            }
+        </div>
+        <div class="card-post-reply">
+            @if (HttpContext.Current.Session["User"] != null)
+            {
+                <button type="button" class="btn btn-primary bg-blue btn-post-reply">Post a Reply</button>
+            }
+            else
+            {
+                <text>Please <a href="/Account/Login">login</a> or <a href="/Account/Register">register</a> to post a comment</text>
+            }
+        </div>
+    </div>
+</div>

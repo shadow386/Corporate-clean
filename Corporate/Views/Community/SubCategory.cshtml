@@ -1,0 +1,85 @@
+﻿@using FallenMoon.Models
+@using FallenMoon.Library
+@using FallenMoon.Library.Database
+@model CommunityViewModel
+@{
+    Layout = "_CommunityLayout.cshtml";
+
+    UserAccount user = null;
+
+    if (Session["User"] != null)
+    {
+        user = Session["User"] as UserAccount;
+    }
+}
+<div class="card">
+    <div class="card-header bg-blue text-light">
+        @(Model.SubCategory.SubCategoryDisplayname ?? Model.SubCategory.SubCategoryName)
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach (var topic in Model.Topics)
+        {
+            using (CommunityManager manager = new CommunityManager())
+            {
+                var posts = manager.GetPosts(topic.TopicId);
+                var firstPost = posts.First();
+                var lastPost = (posts.Count() > 0) ? posts.Last() : null;
+                var topicUser = UserManager.GetProfile(firstPost.UserId);
+                var routeValues = new { forumName = Model.Forum.ForumName, subCategoryName = Model.SubCategory.SubCategoryName, topicId = topic.TopicId };
+
+                <li class="list-group-item">
+                    <div class="sub-category clearfix">
+                        <div class="float-left">
+                            <h4 class="card-title">
+                                @Html.RouteLink(topic.TopicTitle, "Topic", routeValues)
+                            </h4>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                By @Html.RouteLink(topicUser.Profile.UserName, "Profile", new { userName = topicUser.Profile.UserName })
+                                at @topic.TopicDate.ToString("MMM d, yyyy")
+                            </h6>
+                            <p class="card-text">@firstPost.PostText</p>
+                        </div>
+                        <div class="float-right col-md-4">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    @if (lastPost != null)
+                                    {
+                                        var lastPostUser = UserManager.GetProfile(lastPost.UserId);
+                                        <small>
+                                            by @Html.RouteLink(lastPostUser.Profile.UserName, "Profile", new { userName = lastPostUser.Profile.UserName })
+                                            at @lastPost.PostDate.ToString("MMM d, yyyy")
+                                        </small>
+                                    }
+                                    else
+                                    {
+                                        <em>No recent posts</em>
+                                    }
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <h5>
+                                        @{
+                                            var postCount = posts.Count();
+                                            var postString = (postCount != 1) ? "Posts" : "Post";
+                                        }
+                                        @postCount
+                                        <br />
+                                        <small>
+                                            @postString
+                                        </small>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                                                }
+                                            }
+
+        @if (user != null)
+        {
+            <li class="list-group-item text-center text-light list-group-buttons">
+                @Html.RouteLink("New Topic", "NewTopic", new { forumName = Model.Forum.ForumName, subCategoryName = Model.SubCategory.SubCategoryName }, new { @class = "col-md-12 bg-blue" })
+            </li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,75 @@
+﻿@using FallenMoon.Models
+@using FallenMoon.Library.Database
+@model CommunityViewModel
+@{
+    ViewBag.Brand = string.Join(" - ", "Community", ViewBag.Brand);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var breadcrumb = new Dictionary<string, object>() {
+        { "Forum", Model.Forum },
+        { "Category", Model.Category},
+        { "SubCategory", Model.SubCategory},
+        { "Topic", Model.Topic}
+    };
+}
+
+<nav class="breadcrumb bg-blue">
+    <div class="container">
+        @Html.ActionLink("Community", "Index", null, new { @class = "breadcrumb-item text-light" })
+        @foreach (var item in breadcrumb)
+        {
+            if (item.Value == null) { continue; }
+            bool isLast = breadcrumb[item.Key].Equals(breadcrumb.Last().Value);
+            if (item.Value is CommunityForum)
+            {
+                var forum = item.Value as CommunityForum;
+                if (!isLast)
+                {
+                    @Html.RouteLink(forum.ForumDisplayName ?? forum.ForumName, "Forum", new { forumname = forum.ForumName }, new { @class = "breadcrumb-item text-light" })
+                }
+                else
+                {
+                    <span class="breadcrumb-item text-light">@(forum.ForumDisplayName ?? forum.ForumName)</span>
+                }
+            }
+
+            if (item.Value is CommunityCategory)
+            {
+                var category = item.Value as CommunityCategory;
+                <span class="breadcrumb-item text-light">@(category.CategoryDisplayName ?? category.CategoryName)</span>
+            }
+
+            if (item.Value is CommunitySubCategory)
+            {
+                var subCategory = item.Value as CommunitySubCategory;
+                var forum = breadcrumb["Forum"] as CommunityForum;
+                if (!isLast)
+                {
+                    @Html.RouteLink(subCategory.SubCategoryDisplayname ?? subCategory.SubCategoryName, "SubCategory", new { forumname = forum.ForumName, subCategoryName = subCategory.SubCategoryName }, new { @class = "breadcrumb-item text-light" })
+                }
+                else
+                {
+                    <span class="breadcrumb-item text-light">@(subCategory.SubCategoryDisplayname ?? subCategory.SubCategoryName)</span>
+                }
+            }
+
+            if (item.Value is CommunityTopic)
+            {
+                var topic = item.Value as CommunityTopic;
+                <span class="breadcrumb-item text-light">@topic.TopicTitle</span>
+            }
+        }
+    </div>
+</nav>
+
+<div class="community-layout">
+    <div class="container">
+        <h1 class="text-center display-4">@Model.Forum.ForumDisplayName Forums</h1>
+
+        @RenderBody()
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/fallenmoon.community.js")
+}

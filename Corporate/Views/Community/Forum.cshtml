@@ -1,0 +1,138 @@
+﻿@using FallenMoon.Models
+@using FallenMoon.Library
+@model CommunityViewModel
+@{
+    ViewBag.Title = Model.Forum.ForumDisplayName;
+    Layout = "_CommunityLayout.cshtml";
+}
+
+@if (Model.Forum.UseTraditionalStyle)
+{
+    foreach (var category in Model.Categories)
+    {
+        var categoryName = category.CategoryDisplayName ?? category.CategoryName;
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header text-white bg-blue mb-3">@categoryName</div>
+                    <ul class="list-group list-group-flush forum-subcategory">
+                        @foreach (var subCategory in category.CommunitySubCategories)
+                        {
+                            var subCategoryName = subCategory.SubCategoryDisplayname ?? subCategory.SubCategoryName;
+                            <li class="list-group-item">
+                                @Html.RouteLink(subCategoryName, "SubCategory", new { forumName = Model.Forum.ForumName, subCategoryName = subCategory.SubCategoryName }, new { @class = "text-primary" })
+                                <br />
+                                @subCategory.SubCategoryDescription
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header bg-blue">
+            <nav class="nav nav-tabs card-header-tabs" id="communityTab" role="tablist">
+                @foreach (var category in Model.Categories)
+                {
+                    var categoryName = category.CategoryDisplayName ?? category.CategoryName;
+                    var active = "";
+                    if (category == Model.Categories.First())
+                    {
+                        active = "active";
+                    }
+
+                    <a class="nav-item nav-link @active" id="nav-@categoryName.ToLower()-tab" data-toggle="tab" href="#nav-@categoryName.ToLower()" role="tab" aria-controls="nav-@categoryName.ToLower()">@categoryName</a>
+                }
+            </nav>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="nav-tabContent">
+                @foreach (var category in Model.Categories)
+                {
+                    var categoryName = category.CategoryDisplayName ?? category.CategoryName;
+                    var active = "";
+                    if (category == Model.Categories.First())
+                    {
+                        active = "show active";
+                    }
+
+                    <div class="tab-pane fade @active" id="nav-@categoryName.ToLower()" role="tabpanel" aria-labelledby="nav-@categoryName.ToLower()-tab">
+                    @foreach (var subCategory in category.CommunitySubCategories)
+                    {
+                        var last = category.CommunitySubCategories.Last();
+                        var subCategoryName = subCategory.SubCategoryDisplayname ?? subCategory.SubCategoryName;
+                            <div class="sub-category clearfix">
+                                <div class="float-left">
+                                    @Html.RouteLink(subCategoryName, "SubCategory", new { forumName = Model.Forum.ForumName, subCategoryName = subCategory.SubCategoryName }, new { @class = "text-primary" })
+                                    <br />
+                                    @subCategory.SubCategoryDescription
+                                </div>
+                                <div class="float-right col-md-5">
+                                    @using (CommunityManager manager = new CommunityManager())
+                                    {
+                                        var topics = manager.GetTopics(subCategory.SubCategoryId);
+                                        var posts = topics.SelectMany(t => t.CommunityPosts);
+                                        var lastPost = (posts.Count() > 0) ? posts.Last() : null;
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                @if (lastPost != null)
+                                                {
+                                                    var lastPostUser = UserManager.GetProfile(lastPost.UserId);
+                                                    @Html.RouteLink(lastPost.CommunityTopic.TopicTitle, "Topic", new { forumName = Model.Forum.ForumName, subCategoryName = subCategory.SubCategoryName, topicId = lastPost.ParentTopicId })
+                                                    <br />
+                                                    <small>
+                                                        by @Html.RouteLink(lastPostUser.Profile.UserName, "Profile", new { userName = lastPostUser.Profile.UserName })
+                                                        at @lastPost.PostDate.ToString("MMM d, yyyy")
+                                                    </small>
+                                                }
+                                                else
+                                                {
+                                                    <em>No recent posts</em>
+                                                }
+                                            </div>
+                                            <div class="col-md-3 text-center">
+                                                <h5>
+                                                    @{
+                                                        var topicCount = topics.Count();
+                                                        var topicString = (topicCount != 1) ? "Topics" : "Topic";
+                                                    }
+                                                    @topicCount
+                                                    <br />
+                                                    <small>
+                                                        @topicString
+                                                    </small>
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-3 text-center">
+                                                <h5>
+                                                    @{
+                                                        var postCount = posts.Count();
+                                                        var postString = (postCount != 1) ? "Posts" : "Post";
+                                                    }
+                                                    @postCount
+                                                    <br />
+                                                    <small>
+                                                        @postString
+                                                    </small>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            if (subCategory != last)
+                            {
+                                <hr />
+                            }
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

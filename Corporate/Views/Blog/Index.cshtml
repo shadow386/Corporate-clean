@@ -1,0 +1,50 @@
+﻿@using FallenMoon.Library;
+@using FallenMoon.Models;
+@using System.Globalization;
+@model BlogViewModel
+@{
+    Layout = "_BlogLayout.cshtml";
+}
+
+@if (Model.Stories == null || Model.Stories.Count() == 0)
+{
+    <div class="row">
+        <h3>No stories!</h3>
+    </div>
+}
+else
+{
+    foreach (var post in Model.Stories)
+    {
+        var profile = UserManager.GetProfile(post.UserId).Profile;
+        <div class="card">
+            <a href="/Blog/Story/@post.BlogPostId" class="card-header text-dark text-undecorated">
+                <h4>
+                    @post.BlogTitle
+                    <small class="text-muted">By @profile.UserName on @post.DatePublished.Value.ToString("D", CultureInfo.CreateSpecificCulture("en-US"))</small>
+                </h4>
+            </a>
+            <div class="card-body" style="white-space: pre-line">@Html.Raw(post.BlogBody)</div>
+            <div class="card-footer text-muted">
+                @if (post.BlogPostComments.Count() > 0)
+                {
+                    <em>@post.BlogPostComments.Count() comments</em>
+                }
+                else
+                {
+                    <em> No comments</em>
+                }
+            </div>
+        </div>
+    }
+}
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        <li class="page-item @(!Model.HasPrevPage ? "disabled" : "")">
+            <a class="page-link" href="/Blog/Stories/@(Model.CurrentPage - 1)" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+            <a class="page-link" href="/Blog/Stories/@(Model.CurrentPage + 1)">Next</a>
+        </li>
+    </ul>
+</nav>

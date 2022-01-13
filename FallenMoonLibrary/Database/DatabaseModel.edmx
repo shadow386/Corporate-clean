@@ -1,0 +1,1052 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FallenMoon.Database.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BlogPostCommentReports">
+          <Key>
+            <PropertyRef Name="BlogPostCommentReportId" />
+          </Key>
+          <Property Name="BlogPostCommentReportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogPostCommentId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogPostComments">
+          <Key>
+            <PropertyRef Name="BlogPostCommentId" />
+          </Key>
+          <Property Name="BlogPostCommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogPostId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CommentText" Type="text" />
+          <Property Name="CommentDate" Type="datetime" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Removed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogPosts">
+          <Key>
+            <PropertyRef Name="BlogPostId" />
+          </Key>
+          <Property Name="BlogPostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="BlogTitle" Type="nchar" MaxLength="10" />
+          <Property Name="BlogBody" Type="text" />
+          <Property Name="DateDrafted" Type="datetime" />
+          <Property Name="DatePublished" Type="datetime" />
+          <Property Name="Published" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="DateDeleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CommunityCategories">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentForumId" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryDisplayName" Type="varchar" MaxLength="50" />
+          <Property Name="CategoryDescription" Type="text" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommunityForums">
+          <Key>
+            <PropertyRef Name="ForumId" />
+          </Key>
+          <Property Name="ForumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ForumName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ForumDisplayName" Type="varchar" MaxLength="50" />
+          <Property Name="ForumImage" Type="varchar" MaxLength="50" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="UseTraditionalStyle" Type="bit" Nullable="false" />
+          <Property Name="StaffOnly" Type="bit" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommunityPosts">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentTopicId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PostText" Type="text" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="PostDate" Type="datetime" Nullable="false" />
+          <Property Name="LastEdited" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CommunitySubCategories">
+          <Key>
+            <PropertyRef Name="SubCategoryId" />
+          </Key>
+          <Property Name="SubCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentCategoryId" Type="int" Nullable="false" />
+          <Property Name="SubCategoryName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubCategoryDisplayname" Type="varchar" MaxLength="50" />
+          <Property Name="SubCategoryDescription" Type="text" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommunityTopics">
+          <Key>
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Name="TopicId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubCategoryId" Type="int" Nullable="false" />
+          <Property Name="TopicTitle" Type="varchar" MaxLength="50" />
+          <Property Name="TopicDate" Type="datetime" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="Locked" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAccounts">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserRankId" Type="int" Nullable="false" />
+          <Property Name="UserEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="PasswordSalt" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="LoginAttempts" Type="int" Nullable="false" />
+          <Property Name="Locked" Type="bit" Nullable="false" />
+          <Property Name="LockDate" Type="datetime" />
+          <Property Name="Token" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserEmailConfirmations">
+          <Key>
+            <PropertyRef Name="ConfirmationId" />
+          </Key>
+          <Property Name="ConfirmationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ConfirmationNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DateSent" Type="datetime" Nullable="false" />
+          <Property Name="Redeemed" Type="bit" Nullable="false" />
+          <Property Name="DateRedeemed" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserMessages">
+          <Key>
+            <PropertyRef Name="UserMessageId" />
+          </Key>
+          <Property Name="UserMessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromUserId" Type="int" />
+          <Property Name="ToUserId" Type="int" />
+          <Property Name="MessageSubject" Type="varchar" MaxLength="50" />
+          <Property Name="MessageBody" Type="text" />
+          <Property Name="MessageDate" Type="datetime" Nullable="false" />
+          <Property Name="MessageDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfiles">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="FullName" Type="varchar" MaxLength="50" />
+          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="PublicData" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRanks">
+          <Key>
+            <PropertyRef Name="UserRankId" />
+          </Key>
+          <Property Name="UserRankId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RankName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_BlogPostCommentReports_BlogPostComments">
+          <End Role="BlogPostComments" Type="Self.BlogPostComments" Multiplicity="1" />
+          <End Role="BlogPostCommentReports" Type="Self.BlogPostCommentReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPostComments">
+              <PropertyRef Name="BlogPostCommentId" />
+            </Principal>
+            <Dependent Role="BlogPostCommentReports">
+              <PropertyRef Name="BlogPostCommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogPostCommentReports_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="1" />
+          <End Role="BlogPostCommentReports" Type="Self.BlogPostCommentReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogPostCommentReports">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogPostComments_BlogPosts">
+          <End Role="BlogPosts" Type="Self.BlogPosts" Multiplicity="1" />
+          <End Role="BlogPostComments" Type="Self.BlogPostComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPosts">
+              <PropertyRef Name="BlogPostId" />
+            </Principal>
+            <Dependent Role="BlogPostComments">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogPostComments_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="1" />
+          <End Role="BlogPostComments" Type="Self.BlogPostComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogPostComments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogPosts_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="1" />
+          <End Role="BlogPosts" Type="Self.BlogPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogPosts">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunityCategories_CommunityForums">
+          <End Role="CommunityForums" Type="Self.CommunityForums" Multiplicity="1" />
+          <End Role="CommunityCategories" Type="Self.CommunityCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunityForums">
+              <PropertyRef Name="ForumId" />
+            </Principal>
+            <Dependent Role="CommunityCategories">
+              <PropertyRef Name="ParentForumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunityPosts_CommunityTopics">
+          <End Role="CommunityTopics" Type="Self.CommunityTopics" Multiplicity="1" />
+          <End Role="CommunityPosts" Type="Self.CommunityPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunityTopics">
+              <PropertyRef Name="TopicId" />
+            </Principal>
+            <Dependent Role="CommunityPosts">
+              <PropertyRef Name="ParentTopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunitySubCategories_CommunityCategories">
+          <End Role="CommunityCategories" Type="Self.CommunityCategories" Multiplicity="1" />
+          <End Role="CommunitySubCategories" Type="Self.CommunitySubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunityCategories">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="CommunitySubCategories">
+              <PropertyRef Name="ParentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunityTopicPosts_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="1" />
+          <End Role="CommunityPosts" Type="Self.CommunityPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CommunityPosts">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunityTopics_CommunitySubCategories">
+          <End Role="CommunitySubCategories" Type="Self.CommunitySubCategories" Multiplicity="1" />
+          <End Role="CommunityTopics" Type="Self.CommunityTopics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunitySubCategories">
+              <PropertyRef Name="SubCategoryId" />
+            </Principal>
+            <Dependent Role="CommunityTopics">
+              <PropertyRef Name="SubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccounts_UserRanks">
+          <End Role="UserRanks" Type="Self.UserRanks" Multiplicity="1" />
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRanks">
+              <PropertyRef Name="UserRankId" />
+            </Principal>
+            <Dependent Role="UserAccounts">
+              <PropertyRef Name="UserRankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEmailConfirmations_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="1" />
+          <End Role="UserEmailConfirmations" Type="Self.UserEmailConfirmations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserEmailConfirmations">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessages_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="0..1" />
+          <End Role="UserMessages" Type="Self.UserMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMessages">
+              <PropertyRef Name="FromUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessages_UserAccounts1">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="0..1" />
+          <End Role="UserMessages" Type="Self.UserMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMessages">
+              <PropertyRef Name="ToUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfiles_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="1" />
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserProfiles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FallenMoonDatabaseStoreContainer">
+          <EntitySet Name="BlogPostCommentReports" EntityType="Self.BlogPostCommentReports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogPostComments" EntityType="Self.BlogPostComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogPosts" EntityType="Self.BlogPosts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommunityCategories" EntityType="Self.CommunityCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommunityForums" EntityType="Self.CommunityForums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommunityPosts" EntityType="Self.CommunityPosts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommunitySubCategories" EntityType="Self.CommunitySubCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommunityTopics" EntityType="Self.CommunityTopics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserEmailConfirmations" EntityType="Self.UserEmailConfirmations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMessages" EntityType="Self.UserMessages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRanks" EntityType="Self.UserRanks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BlogPostCommentReports_BlogPostComments" Association="Self.FK_BlogPostCommentReports_BlogPostComments">
+            <End Role="BlogPostComments" EntitySet="BlogPostComments" />
+            <End Role="BlogPostCommentReports" EntitySet="BlogPostCommentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPostCommentReports_UserAccounts" Association="Self.FK_BlogPostCommentReports_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="BlogPostCommentReports" EntitySet="BlogPostCommentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPostComments_BlogPosts" Association="Self.FK_BlogPostComments_BlogPosts">
+            <End Role="BlogPosts" EntitySet="BlogPosts" />
+            <End Role="BlogPostComments" EntitySet="BlogPostComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPostComments_UserAccounts" Association="Self.FK_BlogPostComments_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="BlogPostComments" EntitySet="BlogPostComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPosts_UserAccounts" Association="Self.FK_BlogPosts_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="BlogPosts" EntitySet="BlogPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunityCategories_CommunityForums" Association="Self.FK_CommunityCategories_CommunityForums">
+            <End Role="CommunityForums" EntitySet="CommunityForums" />
+            <End Role="CommunityCategories" EntitySet="CommunityCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunityPosts_CommunityTopics" Association="Self.FK_CommunityPosts_CommunityTopics">
+            <End Role="CommunityTopics" EntitySet="CommunityTopics" />
+            <End Role="CommunityPosts" EntitySet="CommunityPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunitySubCategories_CommunityCategories" Association="Self.FK_CommunitySubCategories_CommunityCategories">
+            <End Role="CommunityCategories" EntitySet="CommunityCategories" />
+            <End Role="CommunitySubCategories" EntitySet="CommunitySubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunityTopicPosts_UserAccounts" Association="Self.FK_CommunityTopicPosts_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="CommunityPosts" EntitySet="CommunityPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunityTopics_CommunitySubCategories" Association="Self.FK_CommunityTopics_CommunitySubCategories">
+            <End Role="CommunitySubCategories" EntitySet="CommunitySubCategories" />
+            <End Role="CommunityTopics" EntitySet="CommunityTopics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccounts_UserRanks" Association="Self.FK_UserAccounts_UserRanks">
+            <End Role="UserRanks" EntitySet="UserRanks" />
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEmailConfirmations_UserAccounts" Association="Self.FK_UserEmailConfirmations_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserEmailConfirmations" EntitySet="UserEmailConfirmations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessages_UserAccounts" Association="Self.FK_UserMessages_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserMessages" EntitySet="UserMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessages_UserAccounts1" Association="Self.FK_UserMessages_UserAccounts1">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserMessages" EntitySet="UserMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfiles_UserAccounts" Association="Self.FK_UserProfiles_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserProfiles" EntitySet="UserProfiles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FallenMoon.Database" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BlogPost">
+          <Key>
+            <PropertyRef Name="BlogPostId" />
+          </Key>
+          <Property Name="BlogPostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="BlogTitle" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="BlogBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="DateDeleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserAccount" Relationship="Self.FK_BlogPosts_UserAccounts" FromRole="BlogPosts" ToRole="UserAccounts" />
+          <Property Name="DateDrafted" Type="DateTime" Precision="3" />
+          <Property Name="DatePublished" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BlogPostComments" Relationship="FallenMoon.Database.FK_BlogPostComments_BlogPosts" FromRole="BlogPost" ToRole="BlogPostComment" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserRankId" Type="Int32" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="LoginAttempts" Type="Int32" Nullable="false" />
+          <Property Name="Locked" Type="Boolean" Nullable="false" />
+          <Property Name="LockDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BlogPosts" Relationship="Self.FK_BlogPosts_UserAccounts" FromRole="UserAccounts" ToRole="BlogPosts" />
+          <NavigationProperty Name="UserRank" Relationship="Self.FK_UserAccounts_UserRanks" FromRole="UserAccounts" ToRole="UserRanks" />
+          <NavigationProperty Name="UserEmailConfirmations" Relationship="Self.FK_UserEmailConfirmations_UserAccounts" FromRole="UserAccounts" ToRole="UserEmailConfirmations" />
+          <NavigationProperty Name="UserMessages" Relationship="Self.FK_UserMessages_UserAccounts" FromRole="UserAccounts" ToRole="UserMessages" />
+          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserProfile" Relationship="FallenMoon.Database.FK_UserProfiles_UserAccounts" FromRole="UserAccount" ToRole="UserProfile" />
+          <NavigationProperty Name="BlogPostCommentReports" Relationship="FallenMoon.Database.FK_BlogPostCommentReports_UserAccounts" FromRole="UserAccount" ToRole="BlogPostCommentReport" />
+          <NavigationProperty Name="BlogPostComments" Relationship="FallenMoon.Database.FK_BlogPostComments_UserAccounts" FromRole="UserAccount" ToRole="BlogPostComment" />
+          <NavigationProperty Name="CommunityPosts" Relationship="FallenMoon.Database.FK_CommunityTopicPosts_UserAccounts" FromRole="UserAccount" ToRole="CommunityPost" />
+        </EntityType>
+        <EntityType Name="UserEmailConfirmation">
+          <Key>
+            <PropertyRef Name="ConfirmationId" />
+          </Key>
+          <Property Name="ConfirmationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ConfirmationNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateSent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Redeemed" Type="Boolean" Nullable="false" />
+          <Property Name="DateRedeemed" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserAccount" Relationship="Self.FK_UserEmailConfirmations_UserAccounts" FromRole="UserEmailConfirmations" ToRole="UserAccounts" />
+        </EntityType>
+        <EntityType Name="UserMessage">
+          <Key>
+            <PropertyRef Name="UserMessageId" />
+          </Key>
+          <Property Name="UserMessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromUserId" Type="Int32" />
+          <Property Name="ToUserId" Type="Int32" />
+          <Property Name="MessageSubject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MessageBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MessageDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MessageDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserAccount" Relationship="Self.FK_UserMessages_UserAccounts" FromRole="UserMessages" ToRole="UserAccounts" />
+          <NavigationProperty Name="UserAccount1" Relationship="Self.FK_UserMessages_UserAccounts1" FromRole="UserMessages" ToRole="UserAccounts" />
+        </EntityType>
+        <EntityType Name="UserRank">
+          <Key>
+            <PropertyRef Name="UserRankId" />
+          </Key>
+          <Property Name="UserRankId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserAccounts" Relationship="Self.FK_UserAccounts_UserRanks" FromRole="UserRanks" ToRole="UserAccounts" />
+        </EntityType>
+        <Association Name="FK_BlogPosts_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccount" Multiplicity="1" />
+          <End Role="BlogPosts" Type="Self.BlogPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogPosts">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccounts_UserRanks">
+          <End Role="UserRanks" Type="Self.UserRank" Multiplicity="1" />
+          <End Role="UserAccounts" Type="Self.UserAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRanks">
+              <PropertyRef Name="UserRankId" />
+            </Principal>
+            <Dependent Role="UserAccounts">
+              <PropertyRef Name="UserRankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserEmailConfirmations_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccount" Multiplicity="1" />
+          <End Role="UserEmailConfirmations" Type="Self.UserEmailConfirmation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserEmailConfirmations">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessages_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="UserMessages" Type="Self.UserMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMessages">
+              <PropertyRef Name="FromUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessages_UserAccounts1">
+          <End Role="UserAccounts" Type="Self.UserAccount" Multiplicity="0..1" />
+          <End Role="UserMessages" Type="Self.UserMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMessages">
+              <PropertyRef Name="ToUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DEV_fallencoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BlogPosts" EntityType="Self.BlogPost" />
+          <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
+          <EntitySet Name="UserEmailConfirmations" EntityType="Self.UserEmailConfirmation" />
+          <EntitySet Name="UserMessages" EntityType="Self.UserMessage" />
+          <EntitySet Name="UserRanks" EntityType="Self.UserRank" />
+          <AssociationSet Name="FK_BlogPosts_UserAccounts" Association="Self.FK_BlogPosts_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="BlogPosts" EntitySet="BlogPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAccounts_UserRanks" Association="Self.FK_UserAccounts_UserRanks">
+            <End Role="UserRanks" EntitySet="UserRanks" />
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserEmailConfirmations_UserAccounts" Association="Self.FK_UserEmailConfirmations_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserEmailConfirmations" EntitySet="UserEmailConfirmations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessages_UserAccounts" Association="Self.FK_UserMessages_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserMessages" EntitySet="UserMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessages_UserAccounts1" Association="Self.FK_UserMessages_UserAccounts1">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserMessages" EntitySet="UserMessages" />
+          </AssociationSet>
+          <EntitySet Name="UserProfiles" EntityType="FallenMoon.Database.UserProfile" />
+          <AssociationSet Name="FK_UserProfiles_UserAccounts" Association="FallenMoon.Database.FK_UserProfiles_UserAccounts">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <EntitySet Name="BlogPostCommentReports" EntityType="FallenMoon.Database.BlogPostCommentReport" />
+          <EntitySet Name="BlogPostComments" EntityType="FallenMoon.Database.BlogPostComment" />
+          <AssociationSet Name="FK_BlogPostCommentReports_BlogPostComments" Association="FallenMoon.Database.FK_BlogPostCommentReports_BlogPostComments">
+            <End Role="BlogPostComment" EntitySet="BlogPostComments" />
+            <End Role="BlogPostCommentReport" EntitySet="BlogPostCommentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPostCommentReports_UserAccounts" Association="FallenMoon.Database.FK_BlogPostCommentReports_UserAccounts">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="BlogPostCommentReport" EntitySet="BlogPostCommentReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPostComments_BlogPosts" Association="FallenMoon.Database.FK_BlogPostComments_BlogPosts">
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+            <End Role="BlogPostComment" EntitySet="BlogPostComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlogPostComments_UserAccounts" Association="FallenMoon.Database.FK_BlogPostComments_UserAccounts">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="BlogPostComment" EntitySet="BlogPostComments" />
+          </AssociationSet>
+          <EntitySet Name="CommunityCategories" EntityType="FallenMoon.Database.CommunityCategory" />
+          <EntitySet Name="CommunityForums" EntityType="FallenMoon.Database.CommunityForum" />
+          <EntitySet Name="CommunityPosts" EntityType="FallenMoon.Database.CommunityPost" />
+          <EntitySet Name="CommunitySubCategories" EntityType="FallenMoon.Database.CommunitySubCategory" />
+          <EntitySet Name="CommunityTopics" EntityType="FallenMoon.Database.CommunityTopic" />
+          <AssociationSet Name="FK_CommunityCategories_CommunityForums" Association="FallenMoon.Database.FK_CommunityCategories_CommunityForums">
+            <End Role="CommunityForum" EntitySet="CommunityForums" />
+            <End Role="CommunityCategory" EntitySet="CommunityCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunitySubCategories_CommunityCategories" Association="FallenMoon.Database.FK_CommunitySubCategories_CommunityCategories">
+            <End Role="CommunityCategory" EntitySet="CommunityCategories" />
+            <End Role="CommunitySubCategory" EntitySet="CommunitySubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunityPosts_CommunityTopics" Association="FallenMoon.Database.FK_CommunityPosts_CommunityTopics">
+            <End Role="CommunityTopic" EntitySet="CommunityTopics" />
+            <End Role="CommunityPost" EntitySet="CommunityPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunityTopicPosts_UserAccounts" Association="FallenMoon.Database.FK_CommunityTopicPosts_UserAccounts">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="CommunityPost" EntitySet="CommunityPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommunityTopics_CommunitySubCategories" Association="FallenMoon.Database.FK_CommunityTopics_CommunitySubCategories">
+            <End Role="CommunitySubCategory" EntitySet="CommunitySubCategories" />
+            <End Role="CommunityTopic" EntitySet="CommunityTopics" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="PublicData" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserAccount" Relationship="FallenMoon.Database.FK_UserProfiles_UserAccounts" FromRole="UserProfile" ToRole="UserAccount" />
+        </EntityType>
+        <Association Name="FK_UserProfiles_UserAccounts">
+          <End Type="FallenMoon.Database.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="FallenMoon.Database.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BlogPostCommentReport">
+          <Key>
+            <PropertyRef Name="BlogPostCommentReportId" />
+          </Key>
+          <Property Name="BlogPostCommentReportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogPostCommentId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BlogPostComment" Relationship="FallenMoon.Database.FK_BlogPostCommentReports_BlogPostComments" FromRole="BlogPostCommentReport" ToRole="BlogPostComment" />
+          <NavigationProperty Name="UserAccount" Relationship="FallenMoon.Database.FK_BlogPostCommentReports_UserAccounts" FromRole="BlogPostCommentReport" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="BlogPostComment">
+          <Key>
+            <PropertyRef Name="BlogPostCommentId" />
+          </Key>
+          <Property Name="BlogPostCommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogPostId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CommentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Removed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BlogPostCommentReports" Relationship="FallenMoon.Database.FK_BlogPostCommentReports_BlogPostComments" FromRole="BlogPostComment" ToRole="BlogPostCommentReport" />
+          <NavigationProperty Name="BlogPost" Relationship="FallenMoon.Database.FK_BlogPostComments_BlogPosts" FromRole="BlogPostComment" ToRole="BlogPost" />
+          <NavigationProperty Name="UserAccount" Relationship="FallenMoon.Database.FK_BlogPostComments_UserAccounts" FromRole="BlogPostComment" ToRole="UserAccount" />
+        </EntityType>
+        <Association Name="FK_BlogPostCommentReports_BlogPostComments">
+          <End Type="FallenMoon.Database.BlogPostComment" Role="BlogPostComment" Multiplicity="1" />
+          <End Type="FallenMoon.Database.BlogPostCommentReport" Role="BlogPostCommentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPostComment">
+              <PropertyRef Name="BlogPostCommentId" />
+            </Principal>
+            <Dependent Role="BlogPostCommentReport">
+              <PropertyRef Name="BlogPostCommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogPostCommentReports_UserAccounts">
+          <End Type="FallenMoon.Database.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="FallenMoon.Database.BlogPostCommentReport" Role="BlogPostCommentReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogPostCommentReport">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogPostComments_BlogPosts">
+          <End Type="FallenMoon.Database.BlogPost" Role="BlogPost" Multiplicity="1" />
+          <End Type="FallenMoon.Database.BlogPostComment" Role="BlogPostComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPost">
+              <PropertyRef Name="BlogPostId" />
+            </Principal>
+            <Dependent Role="BlogPostComment">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlogPostComments_UserAccounts">
+          <End Type="FallenMoon.Database.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="FallenMoon.Database.BlogPostComment" Role="BlogPostComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlogPostComment">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CommunityCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentForumId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryDisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CommunityForum" Relationship="FallenMoon.Database.FK_CommunityCategories_CommunityForums" FromRole="CommunityCategory" ToRole="CommunityForum" />
+          <NavigationProperty Name="CommunitySubCategories" Relationship="FallenMoon.Database.FK_CommunitySubCategories_CommunityCategories" FromRole="CommunityCategory" ToRole="CommunitySubCategory" />
+        </EntityType>
+        <EntityType Name="CommunityForum">
+          <Key>
+            <PropertyRef Name="ForumId" />
+          </Key>
+          <Property Name="ForumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ForumName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ForumDisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ForumImage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="UseTraditionalStyle" Type="Boolean" Nullable="false" />
+          <Property Name="StaffOnly" Type="Boolean" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CommunityCategories" Relationship="FallenMoon.Database.FK_CommunityCategories_CommunityForums" FromRole="CommunityForum" ToRole="CommunityCategory" />
+        </EntityType>
+        <EntityType Name="CommunityPost">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentTopicId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PostText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="PostDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastEdited" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CommunityTopic" Relationship="FallenMoon.Database.FK_CommunityPosts_CommunityTopics" FromRole="CommunityPost" ToRole="CommunityTopic" />
+          <NavigationProperty Name="UserAccount" Relationship="FallenMoon.Database.FK_CommunityTopicPosts_UserAccounts" FromRole="CommunityPost" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="CommunitySubCategory">
+          <Key>
+            <PropertyRef Name="SubCategoryId" />
+          </Key>
+          <Property Name="SubCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubCategoryDisplayname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubCategoryDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CommunityCategory" Relationship="FallenMoon.Database.FK_CommunitySubCategories_CommunityCategories" FromRole="CommunitySubCategory" ToRole="CommunityCategory" />
+          <NavigationProperty Name="CommunityTopics" Relationship="FallenMoon.Database.FK_CommunityTopics_CommunitySubCategories" FromRole="CommunitySubCategory" ToRole="CommunityTopic" />
+        </EntityType>
+        <EntityType Name="CommunityTopic">
+          <Key>
+            <PropertyRef Name="TopicId" />
+          </Key>
+          <Property Name="TopicId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="TopicTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TopicDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Locked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CommunityPosts" Relationship="FallenMoon.Database.FK_CommunityPosts_CommunityTopics" FromRole="CommunityTopic" ToRole="CommunityPost" />
+          <NavigationProperty Name="CommunitySubCategory" Relationship="FallenMoon.Database.FK_CommunityTopics_CommunitySubCategories" FromRole="CommunityTopic" ToRole="CommunitySubCategory" />
+        </EntityType>
+        <Association Name="FK_CommunityCategories_CommunityForums">
+          <End Type="FallenMoon.Database.CommunityForum" Role="CommunityForum" Multiplicity="1" />
+          <End Type="FallenMoon.Database.CommunityCategory" Role="CommunityCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunityForum">
+              <PropertyRef Name="ForumId" />
+            </Principal>
+            <Dependent Role="CommunityCategory">
+              <PropertyRef Name="ParentForumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunitySubCategories_CommunityCategories">
+          <End Type="FallenMoon.Database.CommunityCategory" Role="CommunityCategory" Multiplicity="1" />
+          <End Type="FallenMoon.Database.CommunitySubCategory" Role="CommunitySubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunityCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="CommunitySubCategory">
+              <PropertyRef Name="ParentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunityPosts_CommunityTopics">
+          <End Type="FallenMoon.Database.CommunityTopic" Role="CommunityTopic" Multiplicity="1" />
+          <End Type="FallenMoon.Database.CommunityPost" Role="CommunityPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunityTopic">
+              <PropertyRef Name="TopicId" />
+            </Principal>
+            <Dependent Role="CommunityPost">
+              <PropertyRef Name="ParentTopicId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunityTopicPosts_UserAccounts">
+          <End Type="FallenMoon.Database.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="FallenMoon.Database.CommunityPost" Role="CommunityPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CommunityPost">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommunityTopics_CommunitySubCategories">
+          <End Type="FallenMoon.Database.CommunitySubCategory" Role="CommunitySubCategory" Multiplicity="1" />
+          <End Type="FallenMoon.Database.CommunityTopic" Role="CommunityTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommunitySubCategory">
+              <PropertyRef Name="SubCategoryId" />
+            </Principal>
+            <Dependent Role="CommunityTopic">
+              <PropertyRef Name="SubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FallenMoonDatabaseStoreContainer" CdmEntityContainer="DEV_fallencoreEntities">
+          <EntitySetMapping Name="BlogPosts">
+            <EntityTypeMapping TypeName="FallenMoon.Database.BlogPost">
+              <MappingFragment StoreEntitySet="BlogPosts">
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="DatePublished" ColumnName="DatePublished" />
+                <ScalarProperty Name="DateDrafted" ColumnName="DateDrafted" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BlogTitle" ColumnName="BlogTitle" />
+                <ScalarProperty Name="BlogBody" ColumnName="BlogBody" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccounts">
+            <EntityTypeMapping TypeName="FallenMoon.Database.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccounts">
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserRankId" ColumnName="UserRankId" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="LoginAttempts" ColumnName="LoginAttempts" />
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+                <ScalarProperty Name="LockDate" ColumnName="LockDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserEmailConfirmations">
+            <EntityTypeMapping TypeName="FallenMoon.Database.UserEmailConfirmation">
+              <MappingFragment StoreEntitySet="UserEmailConfirmations">
+                <ScalarProperty Name="ConfirmationId" ColumnName="ConfirmationId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ConfirmationNumber" ColumnName="ConfirmationNumber" />
+                <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+                <ScalarProperty Name="Redeemed" ColumnName="Redeemed" />
+                <ScalarProperty Name="DateRedeemed" ColumnName="DateRedeemed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMessages">
+            <EntityTypeMapping TypeName="FallenMoon.Database.UserMessage">
+              <MappingFragment StoreEntitySet="UserMessages">
+                <ScalarProperty Name="UserMessageId" ColumnName="UserMessageId" />
+                <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+                <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
+                <ScalarProperty Name="MessageSubject" ColumnName="MessageSubject" />
+                <ScalarProperty Name="MessageBody" ColumnName="MessageBody" />
+                <ScalarProperty Name="MessageDate" ColumnName="MessageDate" />
+                <ScalarProperty Name="MessageDeleted" ColumnName="MessageDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRanks">
+            <EntityTypeMapping TypeName="FallenMoon.Database.UserRank">
+              <MappingFragment StoreEntitySet="UserRanks">
+                <ScalarProperty Name="UserRankId" ColumnName="UserRankId" />
+                <ScalarProperty Name="RankName" ColumnName="RankName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="FallenMoon.Database.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfiles">
+                <ScalarProperty Name="PublicData" ColumnName="PublicData" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogPostCommentReports">
+            <EntityTypeMapping TypeName="FallenMoon.Database.BlogPostCommentReport">
+              <MappingFragment StoreEntitySet="BlogPostCommentReports">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BlogPostCommentId" ColumnName="BlogPostCommentId" />
+                <ScalarProperty Name="BlogPostCommentReportId" ColumnName="BlogPostCommentReportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogPostComments">
+            <EntityTypeMapping TypeName="FallenMoon.Database.BlogPostComment">
+              <MappingFragment StoreEntitySet="BlogPostComments">
+                <ScalarProperty Name="Removed" ColumnName="Removed" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+                <ScalarProperty Name="BlogPostCommentId" ColumnName="BlogPostCommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommunityCategories">
+            <EntityTypeMapping TypeName="FallenMoon.Database.CommunityCategory">
+              <MappingFragment StoreEntitySet="CommunityCategories">
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="CategoryDescription" ColumnName="CategoryDescription" />
+                <ScalarProperty Name="CategoryDisplayName" ColumnName="CategoryDisplayName" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ParentForumId" ColumnName="ParentForumId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommunityForums">
+            <EntityTypeMapping TypeName="FallenMoon.Database.CommunityForum">
+              <MappingFragment StoreEntitySet="CommunityForums">
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="StaffOnly" ColumnName="StaffOnly" />
+                <ScalarProperty Name="UseTraditionalStyle" ColumnName="UseTraditionalStyle" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="ForumImage" ColumnName="ForumImage" />
+                <ScalarProperty Name="ForumDisplayName" ColumnName="ForumDisplayName" />
+                <ScalarProperty Name="ForumName" ColumnName="ForumName" />
+                <ScalarProperty Name="ForumId" ColumnName="ForumId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommunityPosts">
+            <EntityTypeMapping TypeName="FallenMoon.Database.CommunityPost">
+              <MappingFragment StoreEntitySet="CommunityPosts">
+                <ScalarProperty Name="LastEdited" ColumnName="LastEdited" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="PostText" ColumnName="PostText" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ParentTopicId" ColumnName="ParentTopicId" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommunitySubCategories">
+            <EntityTypeMapping TypeName="FallenMoon.Database.CommunitySubCategory">
+              <MappingFragment StoreEntitySet="CommunitySubCategories">
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="SubCategoryDescription" ColumnName="SubCategoryDescription" />
+                <ScalarProperty Name="SubCategoryDisplayname" ColumnName="SubCategoryDisplayname" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommunityTopics">
+            <EntityTypeMapping TypeName="FallenMoon.Database.CommunityTopic">
+              <MappingFragment StoreEntitySet="CommunityTopics">
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="TopicDate" ColumnName="TopicDate" />
+                <ScalarProperty Name="TopicTitle" ColumnName="TopicTitle" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="TopicId" ColumnName="TopicId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
